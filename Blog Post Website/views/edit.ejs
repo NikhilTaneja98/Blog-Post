@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Edit a post</h2>
+    <div class="container">
+        <% data.forEach(entry=>{%>
+            <form action="/edit-success" name="form" method="POST" onsubmit="return check()">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" onblur="validateTitle()" class="form-control" name="title" value="<%=entry.title%>">
+                    <div id="ti" style="display: none; color: red; font-size: 12px;">Required</div>
+                </div>
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author Name</label>
+                    <input type="text" onblur="validateAuthor()" class="form-control" name="author" value="<%=entry.author%>">
+                    <div id="auth" style="display: none; color: red; font-size: 12px;">Required</div>
+                </div>
+                <div class="mb-3">
+                    <label for="writing" class="form-label">Writing</label>
+                    <textarea rows = "12" onblur="validateWriting()" class="form-control" name="writing" placeholder="Put writing"><%=entry.writing%></textarea>
+                    <div id="write" style="display: none; color: red; font-size: 12px;">Required</div>
+                </div>
+                <input type="text" name="id" value="<%=entry.id%>">
+                <button type="submit" class="btn btn-outline-primary">Edit</button>
+                <a href="/" class="btn btn-outline-secondary">Cancel</a>
+            </form>
+        <%})%>
+    </div>
+    <script>
+        function validateTitle(){
+            var value = document.forms["form"]["title"].value;
+            var p = document.getElementById("ti");
+            if(value == "" || value == null){
+                p.innerHTML = "Required"
+                p.style.display = "inline";
+            }
+            else if(value.split(" ").length < 10){
+                p.innerHTML = "Title should not be less than 10 words"
+                p.style.display = "inline";
+            }
+            else{
+                p.style.display = "none";
+            }
+        }
+        function validateAuthor(){
+            var value = document.forms["form"]["author"].value;
+            var p = document.getElementById("auth");
+            if(value == "" || value == null){
+                p.style.display = "inline";
+            }
+            else{
+                p.style.display = "none";
+            }
+        }
+        function validateWriting(){
+            var value = document.forms["form"]["writing"].value;
+            var p = document.getElementById("write");
+            if(value == "" || value == null){
+                p.innerHTML = "Required"
+                p.style.display = "inline";
+            }
+            else if(value.split(" ").length < 300){
+                p.innerHTML = "Title should not be less than 300 words"
+                p.style.display = "inline";
+            }
+            else{
+                p.style.display = "none";
+            }
+        }
+        function check(){
+        if(document.getElementById("ti").style.display !== "none" || document.getElementById("auth").style.display !== "none" || document.getElementById("write").style.display !== "none"){
+            return false;
+        }
+        if(document.forms["form"]["title"].value.trim() == "" || document.forms["form"]["author"].value.trim() == "" || document.forms["form"]["writing"].value.trim() == ""){
+            return false;
+        }
+        return true;
+    }
+    </script>
+    
+</body>
+</html>

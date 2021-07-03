@@ -1,0 +1,66 @@
+<div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text"  onblur="validateTitle()" class="form-control" name="title" placeholder="Add a title">
+    <div id="ti" style="display: none; color: red; font-size: 12px;">Required</div>
+</div>
+<div class="mb-3">
+    <label for="writing" class="form-label">Author Name</label>
+    <input type="text" class="form-control" onblur = "validateAuthor()" name="author" placeholder="Your Name">
+    <div id="auth" style="display: none; color: red; font-size: 12px;">Required</div>
+</div>
+<div class="mb-3">
+    <label for="writing" class="form-label">Writing</label>
+    <textarea rows = "12" onblur="validateWriting()" class="form-control" name="writing" placeholder="Put writing"></textarea>
+    <div id="write" style="display: none; color: red; font-size: 12px;">Required</div>
+</div>
+<script>
+    function validateTitle(){
+        var value = document.forms["form"]["title"].value;
+        var p = document.getElementById("ti");
+        if(value == "" || value == null){
+            p.innerHTML = "Required"
+            p.style.display = "inline";
+        }
+        else if(value.split(" ").length < 10){
+            p.innerHTML = "Title should not be less than 10 words"
+            p.style.display = "inline";
+        }
+        else{
+            p.style.display = "none";
+        }
+    }
+    function validateAuthor(){
+        var value = document.forms["form"]["author"].value;
+        var p = document.getElementById("auth");
+        if(value == null || value.trim() == ""){
+            p.style.display = "inline";
+        }
+        else{
+            p.style.display = "none";
+        }
+    }
+    function validateWriting(){
+        var value = document.forms["form"]["writing"].value;
+        var p = document.getElementById("write");
+        if(value == null || value.trim() == ""){
+            p.innerHTML = "Required"
+            p.style.display = "inline";
+        }
+        else if(value.split(" ").length < 300){
+            p.innerHTML = "Writing should not be less than 300 words"
+            p.style.display = "inline";
+        }
+        else{
+            p.style.display = "none";
+        }
+    }
+    function check(){
+        if(document.getElementById("ti").style.display !== "none" || document.getElementById("auth").style.display !== "none" || document.getElementById("write").style.display !== "none"){
+            return false;
+        }
+        if(document.forms["form"]["title"].value.trim() == "" || document.forms["form"]["author"].value.trim() == "" || document.forms["form"]["writing"].value.trim() == ""){
+            return false;
+        }
+        return true;
+    }
+</script>
